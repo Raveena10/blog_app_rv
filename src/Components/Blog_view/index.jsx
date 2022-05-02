@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { DeleteBlog,UpdateBlog} from '../../Action/BlogAction';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import ReadMoreAndLess from 'react-read-more-less';
 export default function Blog_view()
 {
     let history = useHistory();
@@ -38,8 +39,14 @@ export default function Blog_view()
                     {blogSelector.map(blogs => (<>
                       <p className="card-text" onClick={()=>setdelid(blogs.id)}>Blog Id : {blogs.id}</p>
                       <h5 className="card-title">Blog Title : {blogs.Title}</h5>
-                      <p className="card-text">Blog Description : {blogs.Description}</p>
-                      <button type="button" class="btn btn-link btn-sm btn-block">Show More</button>
+                      <ReadMoreAndLess
+                          className="read-more-content"
+                          charLimit={20}
+                          readMoreText="Read more"
+                          readLessText="Read less"
+                      >
+                          {blogs.Description}
+                      </ReadMoreAndLess>
                       <br></br>
                       <br></br>
         

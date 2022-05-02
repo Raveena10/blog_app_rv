@@ -107,7 +107,7 @@ export default function Home() {
         Description
       </label>
       <textarea
-        rows={5}
+        rows={8}
         type="text"
         id="Description"
         className="form-control"
