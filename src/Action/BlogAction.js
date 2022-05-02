@@ -13,4 +13,12 @@ export const getBlog = (getdata) => (
         
         }
     );
+export const DeleteBlog = (deletedata) => (
+        console.log("DeleteblogAction", deletedata),
+        {
+            type: "DELETE_BLOG",
+            payload: deletedata,
+        
+        }
+    );
     

@@ -1,10 +1,13 @@
 
 import React, { useState } from "react";
-import {  useHistory } from "react-router-dom";
+import {  useHistory,useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AddBlog } from "../../Action/BlogAction";
+import shortid from "shortid";
 
 function Home() {
+    let { id } = useParams();
+    console.log(id)
     let history = useHistory();
     const dispatch = useDispatch();
 
@@ -12,6 +15,7 @@ function Home() {
     const [Description, setDescription] = useState("");
     const PostHandler=()=>{
         const blogdata={
+            id: shortid.generate(),
             Title:Title,
             Description:Description
         }

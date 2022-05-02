@@ -2,6 +2,7 @@ import { useSelector ,useDispatch} from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { DeleteBlog } from '../../Action/BlogAction';
 export default function Blog_view()
 {
     let history = useHistory();
@@ -24,6 +25,7 @@ export default function Blog_view()
                       <button
                       type="button"
                       className="btn btn-sm btn-dark mx-3"
+                       onClick={() => dispatch(DeleteBlog(blogs.id))}
                     >
                       Delete
                     </button>

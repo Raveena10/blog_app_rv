@@ -37,7 +37,19 @@ export const BlogReducer = (state=initialstate,action) =>
                   ...state,
                   blog: arr,
                 };
-            } 
+            }
+            case "DELETE_BLOG":
+            {
+              console.log("deleteReducer", action)
+              console.log("deletestate", state)
+              return {
+                ...state,
+                blogs: state.blogs.filter(
+                  (blog) => blog.id != action.payload
+                ),
+              };
+
+            }
           default:
       return state;
                                                                                                                                                
