@@ -8,7 +8,7 @@ export const AddBlog = (blogdata) => (
 export const getBlog = (getdata) => (
         console.log("getblogAction", getdata),
         {
-            type: "GET_BLOG",
+            type: "READ_BLOG",
             payload: getdata,
         
         }
@@ -21,4 +21,11 @@ export const DeleteBlog = (deletedata) => (
         
         }
     );
-    
+export const UpdateBlog = (updatedata) => (
+        console.log("updateblogAction", updatedata),
+        {
+            type: "UPDATE_BLOG",
+            payload: updatedata,
+        
+        }
+    );

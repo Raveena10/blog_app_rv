@@ -15,6 +15,8 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/Show" exact component={Blog_view}/>
+            <Route path="/edit/:id" exact component={Home}/>
+
           </Switch>
         </BrowserRouter>
       </Provider>

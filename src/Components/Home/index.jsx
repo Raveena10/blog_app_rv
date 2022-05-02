@@ -1,11 +1,11 @@
 
-import React, { useState } from "react";
-import {  useHistory,useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AddBlog } from "../../Action/BlogAction";
+import React, { useState,useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { AddBlog,UpdateBlog,getBlog } from "../../Action/BlogAction";
 import shortid from "shortid";
 
-function Home() {
+export default function Home() {
     let { id } = useParams();
     console.log(id)
     let history = useHistory();
@@ -13,16 +13,49 @@ function Home() {
 
     const [Title, setTitle] = useState("");
     const [Description, setDescription] = useState("");
-    const PostHandler=()=>{
-        const blogdata={
-            id: shortid.generate(),
-            Title:Title,
-            Description:Description
+    const getblogSelector = useSelector((state) => state.blogs.blog)
+
+    console.log("out",getblogSelector)
+    const PostHandler=(e)=>{
+      e.preventDefault()
+      if(id)
+      {
+        const blogdata = {
+          id: id,
+          Title:Title,
+          Description:Description
         }
-        dispatch(AddBlog(blogdata));
-        console.log("blog data" + JSON.stringify(blogdata))
-        history.push("/Show")
+        dispatch(UpdateBlog(blogdata));
+        history.push("/Show");
+      }
+      else
+      {
+        const blogdata={
+          id: shortid.generate(),
+          Title:Title,
+          Description:Description
+      }
+      dispatch(AddBlog(blogdata));
+      console.log("blog data" + JSON.stringify(blogdata))
+      history.push("/Show")
+      }
+
     }
+
+      useEffect(() => {
+        if (id) {
+          dispatch(getBlog(id));
+        }
+      }, [id]);
+    
+      useEffect(() => {
+        console.log("getblogSelector in", getblogSelector);
+        if (getblogSelector != null) {
+          setTitle(getblogSelector.Title)
+          setDescription(getblogSelector.Description)
+    
+        }
+      }, [getblogSelector]);
   return (
     <>
     <div className="container">
@@ -35,8 +68,8 @@ function Home() {
         id="Title"
         className="form-control"
         aria-describedby="passwordHelpInline"
-        onChange={(e) => setTitle(e.target.value)}
         value={Title}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
     </div>
@@ -50,8 +83,8 @@ function Home() {
         id="Description"
         className="form-control"
         aria-describedby="passwordHelpInline"
-        onChange={(e) => setDescription(e.target.value)}
         value={Description}
+        onChange={(e) => setDescription(e.target.value)}
       />
     </div>
     <br></br>
@@ -61,10 +94,10 @@ function Home() {
     type="submit" 
     disabled={!Title || !Description}
      onClick={PostHandler}
-     >Post</button>
+     >{id ? "Update Post" : "Add Post"}</button>
     </div>
   </>
   );
 }
 
-export default Home;
+

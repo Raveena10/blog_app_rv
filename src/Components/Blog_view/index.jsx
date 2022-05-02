@@ -2,7 +2,7 @@ import { useSelector ,useDispatch} from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { DeleteBlog } from '../../Action/BlogAction';
+import { DeleteBlog,UpdateBlog} from '../../Action/BlogAction';
 export default function Blog_view()
 {
     let history = useHistory();
@@ -10,6 +10,7 @@ export default function Blog_view()
     const addanother = () => {
         history.push("/");
       }
+  
     const blogSelector = useSelector((state) => state.blogs.blogs)
     console.log("blogSelector ", blogSelector)
     return(
@@ -29,12 +30,10 @@ export default function Blog_view()
                     >
                       Delete
                     </button>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-dark mx-3"
+                    <Link to={`/edit/${blogs.id}`}
                     >
-                      Edit
-                    </button>
+                      <span>Edit</span>
+                    </Link>
                     <hr></hr>
                     </>
                     ))}

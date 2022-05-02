@@ -50,6 +50,18 @@ export const BlogReducer = (state=initialstate,action) =>
               };
 
             }
+            case "UPDATE_BLOG": {
+              console.log(action.payload);
+              return {
+                ...state,
+                blogs: state.blogs.map((blog) =>
+                blog.id == action.payload.id ? action.payload : blog
+                ),
+              };
+            }
+           
+    
+          
           default:
       return state;
                                                                                                                                                
