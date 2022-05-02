@@ -5,4 +5,12 @@ export const AddBlog = (blogdata) => (
         payload: blogdata,
     }
     );
+export const getBlog = (getdata) => (
+        console.log("getblogAction", getdata),
+        {
+            type: "GET_BLOG",
+            payload: getdata,
+        
+        }
+    );
     

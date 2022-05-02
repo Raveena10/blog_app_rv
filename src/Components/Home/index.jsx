@@ -17,6 +17,7 @@ function Home() {
         }
         dispatch(AddBlog(blogdata));
         console.log("blog data" + JSON.stringify(blogdata))
+        history.push("/Show")
     }
   return (
     <>
