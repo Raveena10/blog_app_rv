@@ -14,30 +14,38 @@ export default function Home() {
     const [Title, setTitle] = useState("");
     const [Description, setDescription] = useState("");
     const getblogSelector = useSelector((state) => state.blogs.blog)
-
+    const [val, setVal] = useState(false);
+    const [validate, setvalidate] = useState("");
     console.log("out",getblogSelector)
     const PostHandler=(e)=>{
-      e.preventDefault()
-      if(id)
+      // e.preventDefault()
+      if(val && Title.length>0 && Description.length>0)
       {
-        const blogdata = {
-          id: id,
-          Title:Title,
-          Description:Description
+
+        if(id)
+        {
+          const blogdata = {
+            id: id,
+            Title:Title,
+            Description:Description
+          }
+          dispatch(UpdateBlog(blogdata));
+          history.push("/Show");
         }
-        dispatch(UpdateBlog(blogdata));
-        history.push("/Show");
+        else
+        {
+          const blogdata={
+            id: shortid.generate(),
+            Title:Title,
+            Description:Description
+        }
+        dispatch(AddBlog(blogdata));
+        console.log("blog data" + JSON.stringify(blogdata))
+        history.push("/Show")
+        }
       }
-      else
-      {
-        const blogdata={
-          id: shortid.generate(),
-          Title:Title,
-          Description:Description
-      }
-      dispatch(AddBlog(blogdata));
-      console.log("blog data" + JSON.stringify(blogdata))
-      history.push("/Show")
+      else{
+        setvalidate("Title or Description can't be empty")
       }
 
     }
@@ -56,6 +64,27 @@ export default function Home() {
     
         }
       }, [getblogSelector]);
+      useEffect(() => {
+        if (Title.length > 20) {
+          setVal(false)
+          setvalidate("Title should be less than 20 characters");
+        } else {
+          setvalidate("");
+          setVal(true)
+    
+        }
+      }, [Title]);
+      useEffect(() => {
+        if (Description.length>1000) {
+          setVal(false)
+          setvalidate("Description should be less than 1000 characters");
+          
+        } else {
+          setvalidate("");
+          setVal(true)
+    
+        }
+      }, [Description]);
   return (
     <>
     <div className="container">
@@ -87,6 +116,8 @@ export default function Home() {
         onChange={(e) => setDescription(e.target.value)}
       />
     </div>
+    <br></br>
+    <label style={{ color: "red" }}>{validate}</label>
     <br></br>
     <br></br>
     <button 
